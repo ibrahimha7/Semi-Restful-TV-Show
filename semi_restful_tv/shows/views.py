@@ -14,13 +14,28 @@ def index(request):
     return render(request, "index.html", context)
 
 def create_show(request):
-    
+    #This is for Semi-Restful TV SHOW
+    """ 
     if len(request.POST["title"]) > 1 and len(request.POST["desc"]) > 5 and len(request.POST["network"]) > 1 and len(request.POST["relase_date"]) > 5:
         Shows.objects.create(title=request.POST["title"],network=request.POST["network"],relase_date=request.POST["relase_date"],desc=request.POST["desc"])
         messages.add_message(request, messages.INFO, "A New Show was added!")
     else:
         messages.add_message(request, messages.INFO, "Show could not be added. Make sure you enter a title and network and realse date and a description longer than five characters.")
     return redirect("/add_show")
+    """
+    #This is the Vaildation
+    errors = Shows.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect("/add_show")
+    
+    else:
+        new_show = Shows.objects.create(title=request.POST["title"], network=request.POST["network"], relase_date=request.POST["relase_date"], desc = request.POST["desc"])
+        new_show_id = new_show.id
+        messages.success(request, "A new Show was added")
+        return redirect('/')
+
 def add_show(request):
     return render(request,"add_show.html")
 
@@ -43,6 +58,7 @@ def edit_show(request, num):
     return render(request, "edit_show.html", context)
 
 def submit_edit(request, num):
+    """
     selected = Shows.objects.get(id=num)
     if request.POST['title']:
         selected.title = request.POST['title']
@@ -57,6 +73,27 @@ def submit_edit(request, num):
         selected.description = request.POST['desc']
     selected.save()
     return redirect(f'/show/{num}')
+    """
+    errors = Shows.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f"/edit_show/{num}")
+    else:
+        selected = Shows.objects.get(id=num)
+        if request.POST['title']:
+            selected.title = request.POST['title']
+        
+        if request.POST['network']:
+            selected.network = request.POST['network']
+        
+        if request.POST['relase_date']:
+            selected.relase_date = request.POST['relase_date']
+        
+        if request.POST['desc']:
+            selected.desc = request.POST['desc']
+        selected.save()
+        return redirect(f'/show/{num}')
 
 def delete_show(request, num):
     Shows.objects.get(id=num).delete()
