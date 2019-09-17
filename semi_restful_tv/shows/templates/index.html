@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Semi Restful TV Show</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'shows/css/material-dashboard.css' %}">
+    <script src="{% static 'shows/js/material-dashboard.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card card-nav-tabs card-plain">
+            <div class="card-header card-header-danger">
+                <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="" data-toggle="tab">Shows</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/add_show" data-toggle="tab">Add Show</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="container" style="margin-top: 20px">
+
+                <h1>All Show</h1>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th>SHOW TITLE</th>
+                            <th>SHOW NETWORK</th>
+                            <th>SHOW RELASE DATE</th>
+                            <th>SHOW VIEW</th>
+                            <th>SHOW EDIT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for show in show_list_html %}
+                        <tr>
+                            <td class="text-center">{{show.id}}</td>
+                            <td>{{show.title}}</td>
+                            <td>{{show.network}}</td>
+                            <td>{{show.relase_date}}</td>
+                            <td><a href="/show/{{show.id}}">View</a></td>
+                            <td><a href="/edit_show/{{show.id}}">Edit</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a class="btn btn-primary" href="/add_show">Add A New Show</a>
+            </div>
+</body>
+
+</html>

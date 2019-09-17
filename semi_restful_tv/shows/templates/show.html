@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Semi Restful TV Show</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'shows/css/material-dashboard.css' %}">
+    <script src="{% static 'shows/js/material-dashboard.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card card-nav-tabs card-plain">
+            <div class="card-header card-header-danger">
+                <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#home" data-toggle="tab">Shows</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#updates" data-toggle="tab">Add Show</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+    
+                    
+            
+                    <div class="bookinfo">
+                        <h1>TV Show : {{shows_html.title}} </h1>
+                        <h3>Network : {{shows_html.network}}</h3>
+                        <h3>Relase Date : {{shows_html.relase_date}}</h3>
+                        <h3>Description:</h3>
+                            <p>{{shows_html.desc}}</p>
+                        <br>
+                        <br>
+                        <hr>
+                        <p>Last update : September 17,2019,4:57 PM</p>
+                    </div>
+                    
+                    <td><a href="/edit_show/{{shows_html.id}}">Edit</a></td>
+                    <br>
+                    <td><a href="/delete_show/{{shows_html.id}}">Delete</a></td>
+                </div>
+
+        </div>
+</body>
+
+</html>
